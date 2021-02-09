@@ -13,7 +13,7 @@ function RandomResults() {
   useEffect(() => {
     fetch("/random").then((response) =>
       response.json().then((data) => {
-        console.log(data.result);
+        // console.log(data.result);
         setUser(data.result.user);
         setContent(data.result.content);
         setDate(data.result.date);
@@ -38,16 +38,6 @@ function RandomResults() {
         </CardBody>
       </Card>
     </div>
-    // <Card className="mt-2 w-75 text-center">
-    //   <CardImg top src={data.url} alt={data.title} />
-    //   <CardBody>
-    //     <CardTitle tag="h4">{data.title}</CardTitle>
-    //     <CardSubtitle tag="h6" className="mb-2 text-muted">
-    //       {data.copyright}
-    //     </CardSubtitle>
-    //     <CardText>{data.explanation}</CardText>
-    //   </CardBody>
-    // </Card>
   );
 }
 

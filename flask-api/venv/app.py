@@ -1,19 +1,21 @@
 from flask import Flask
+from flask import request, jsonify
 from flask_cors import CORS
-import requests
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/search", ["GET"])
-def search():
-    return "Hello!"
+@app.route("/search", methods=["POST"])
+def do_search():
+    returnDict = {}
+    returnDict["results"] = request.data.decode("UTF-8")
+    print(returnDict)
+    return returnDict
 
 
 @app.route("/random")
 def random():
-
     return {
         "result": {
             "user": "Kevin Bisner",

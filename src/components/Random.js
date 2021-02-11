@@ -3,7 +3,7 @@ import "./Random.css";
 import RandomResults from "./RandomResults";
 
 function Random() {
-  const favoriteTweeters = ["249957750", "357312062"];
+  const favoriteTweeters = ["249957750", "357312062", "110770469"];
   return (
     <div className="random-container">
       <div className="random-page-overview">

@@ -4,7 +4,11 @@ import { Button, Form, FormGroup, Input } from "reactstrap";
 import SearchResults from "./SearchResults";
 
 function SearchForm() {
-  const [user, setUser] = useState();
+  const [userId, setUserId] = useState();
+  const [userName, setUserName] = useState();
+  const [userScreenName, setScreenName] = useState();
+  const [userTimeline, setUserTimeline] = useState();
+  const [userImageUrl, setUserImageUrl] = useState();
 
   function handleChange(e) {
     e.preventDefault();
@@ -13,10 +17,13 @@ function SearchForm() {
       body: e.target.searchItem.value,
     };
 
-    fetch("/search", searchData).then((response) =>
+    fetch("/searchUser", searchData).then((response) =>
       response.json().then((data) => {
-        console.log(data.results);
-        setUser(data.results);
+        setUserId(data.results[0].userId);
+        setUserName(data.results[0].userName);
+        setScreenName(data.results[0].userScreenName);
+        setUserImageUrl(data.results[0].userProfileImageUrl);
+        setUserTimeline(data.results[0].userTimelineTweets);
       })
     );
   }
@@ -36,7 +43,13 @@ function SearchForm() {
         <Button>Submit</Button>
       </Form>
 
-      <SearchResults user={user} />
+      <SearchResults
+        userId={userId}
+        userName={userName}
+        userScreenName={userScreenName}
+        userImageUrl={userImageUrl}
+        userTimeline={userTimeline}
+      />
     </div>
   );
 }

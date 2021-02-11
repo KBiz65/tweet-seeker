@@ -22,7 +22,7 @@ function App() {
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/search">Search</Link>
+              <Link to="/search.html">Search</Link>
             </li>
             <li className="navbar-item">
               <Link to="/random">Random</Link>
@@ -31,7 +31,7 @@ function App() {
         </div>
 
         <Switch>
-          <Route path="/search">
+          <Route path="/search.html">
             <Search />
           </Route>
           <Route path="/random">

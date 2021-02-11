@@ -10,8 +10,12 @@ function Search() {
           <p>Search Page</p>
           <p>
             Enter anything you'd like in the box below and click "submit" to
-            begin your search. Tweet Seeker will search through all users,
-            tweets, topics, and more to find instances of that search.
+            begin your search. Tweet Seeker will search through screen names and
+            tweet content for your search word or phrase entered.
+          </p>
+          <p>
+            ** if you're searching for a screen name, remember that Twitter
+            screen names do not include spaces **
           </p>
         </div>
       </div>

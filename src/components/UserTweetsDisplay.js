@@ -3,9 +3,9 @@ import Tweet from "./Tweet";
 
 function UserTweetsDisplay(props) {
   console.log("UserTweetsDisplay props: ", props.tweetsArray);
-  const tweets = props.tweetsArray.map((tweet) => (
-    <Tweet tweet={tweet} key={tweet.id} />
-  ));
+  // const tweets = props.tweetsArray.map((tweet) => (
+  //   <Tweet tweet={tweet} key={tweet.id} />
+  // ));
 
   return (
     <div>

@@ -1,0 +1,52 @@
+.tweet-container {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #55acee;
+  border-radius: 5px;
+}
+
+.tweet-container:first-child {
+  margin-top: 0;
+}
+
+.metrics-container {
+  width: 25%;
+  padding-left: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.metrics-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-container {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.text-item {
+  width: 100%;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.created-at-item {
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+}

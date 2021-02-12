@@ -3,8 +3,6 @@ from flask import Flask
 from flask import request, jsonify
 from flask_cors import CORS
 
-import tweepy
-
 app = Flask(__name__)
 CORS(app)
 
@@ -30,28 +28,33 @@ def search_user():
         + "&user.fields=profile_image_url"
     )
     getUserInfo = requests.get(searchParamUrl, headers=headers).json()
-    userData = getUserInfo["data"][0]
-    userId = userData["id"]
-    userScreenName = userData["username"]
-    userName = userData["name"]
-    userProfileImage = userData["profile_image_url"].replace("_normal", "")
-    getUserTweetsUrl = (
-        "https://api.twitter.com/2/users/"
-        + userId
-        + "/tweets?tweet.fields=created_at,public_metrics"
-    )
-    getUserTweets = requests.get(getUserTweetsUrl, headers=headers).json()
-    responseArray = [
-        {
-            "userId": userId,
-            "userScreenName": userScreenName,
-            "userName": userName,
-            "userProfileImageUrl": userProfileImage,
-            "userTimelineTweets": getUserTweets["data"],
-        }
-    ]
-    print("ResponseArray: ", responseArray)
-    return {"results": responseArray}
+
+    if "errors" in getUserInfo:
+        return {"results": {"userId": "Does not exist"}}
+    else:
+        userData = getUserInfo["data"][0]
+        userId = userData["id"]
+        userScreenName = userData["username"]
+        userName = userData["name"]
+        userProfileImage = userData["profile_image_url"].replace("_normal", "")
+        getUserTweetsUrl = (
+            "https://api.twitter.com/2/users/"
+            + userId
+            + "/tweets?tweet.fields=created_at,public_metrics"
+        )
+        print("Getting ready to do getUserTweets")
+        getUserTweets = requests.get(getUserTweetsUrl, headers=headers).json()
+        responseArray = [
+            {
+                "userId": userId,
+                "userScreenName": userScreenName,
+                "userName": userName,
+                "userProfileImageUrl": userProfileImage,
+                "userTimelineTweets": getUserTweets["data"],
+            }
+        ]
+        # print("ResponseArray: ", responseArray)
+        return {"results": responseArray}
 
 
 @app.route("/searchTweets", methods=["POST"])

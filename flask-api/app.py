@@ -9,11 +9,8 @@ from decouple import config
 app = Flask(__name__)
 CORS(app)
 
-# set Twitter config environment variables
-os.environ["BEARER_TOKEN"] = "bearer_token"
-
 # get env variables
-bearer_token = os.getenv("BEARER_TOKEN")
+bearer_token = config("BEARER_TOKEN")
 
 headers = {
     "Authorization": "Bearer %s" % bearer_token,

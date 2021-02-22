@@ -28,3 +28,4 @@ instance/
 .webassets-cache
 __pycache__/
 flask-api/venv/.env
+.env

@@ -22,19 +22,19 @@ function App() {
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/search.html">Search</Link>
+              <Link to="/searchpage">Search</Link>
             </li>
             <li className="navbar-item">
-              <Link to="/random.html">Random</Link>
+              <Link to="/randompage">Random</Link>
             </li>
           </ul>
         </div>
 
         <Switch>
-          <Route path="/search.html">
+          <Route path="/searchpage">
             <Search />
           </Route>
-          <Route path="/random.html">
+          <Route path="/randompage">
             <Random />
           </Route>
           <Route path="/">

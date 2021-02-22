@@ -9,6 +9,7 @@ function SearchForm() {
   const [userScreenName, setScreenName] = useState();
   const [userTimeline, setUserTimeline] = useState([]);
   const [userImageUrl, setUserImageUrl] = useState();
+  const [contentResponse, setContentResponse] = useState();
   const [searchItem, setSearchItem] = useState();
 
   function handleChange(e) {
@@ -19,10 +20,9 @@ function SearchForm() {
       body: searchItem,
     };
 
-    fetch("/searchUser", searchData).then((response) =>
+    fetch("/searchInput", searchData).then((response) =>
       response.json().then((data) => {
-        if (data.results["userId"] === "Does not exist") {
-          console.log("fetch response shows a user doesn't exist");
+        if (data.results[0][0]["userId"] === "Does not exist") {
           setUserId("User does not exist");
           setUserName("");
           setScreenName("");
@@ -30,16 +30,29 @@ function SearchForm() {
           setUserTimeline([]);
           setSearchItem(searchItem);
         } else {
-          setUserId(data.results[0].userId);
-          setUserName(data.results[0].userName);
-          setScreenName(data.results[0].userScreenName);
-          setUserImageUrl(data.results[0].userProfileImageUrl);
-          setUserTimeline(data.results[0].userTimelineTweets);
+          setUserId(data.results[0][0]["userSearchResponse"].userId);
+          setUserName(data.results[0][0]["userSearchResponse"].userName);
+          setScreenName(
+            data.results[0][0]["userSearchResponse"].userScreenName
+          );
+          setUserImageUrl(
+            data.results[0][0]["userSearchResponse"].userProfileImageUrl
+          );
+          setUserTimeline(
+            data.results[0][0]["userSearchResponse"].userTimelineTweets
+          );
           setSearchItem(searchItem);
+        }
+
+        if (data.results[1][0]["contentId"] === "Does not exist") {
+          setContentResponse("No content found");
+        } else {
+          setContentResponse(data.results[1][0]);
         }
       })
     );
   }
+
   return (
     <div className="search-form-container">
       <Form onSubmit={handleChange}>
@@ -62,6 +75,7 @@ function SearchForm() {
         userScreenName={userScreenName}
         userImageUrl={userImageUrl}
         userTimeline={userTimeline}
+        contentResponse={contentResponse}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardImg, CardBody, CardTitle, CardText } from "reactstrap";
+import "./RandomResults.css";
 
 function RandomResults() {
   const [user, setUser] = useState();
@@ -11,16 +12,34 @@ function RandomResults() {
   const [comments, setComments] = useState();
 
   useEffect(() => {
-    fetch("/random").then((response) =>
+    fetch("/randomTweet").then((response) =>
       response.json().then((data) => {
-        // console.log(data.result);
-        setUser(data.result.user);
-        setContent(data.result.content);
-        setDate(data.result.date);
-        setImage(data.result.image);
-        setRetweets(data.result.retweets);
-        setLikes(data.result.likes);
-        setComments(data.result.comments);
+        const randomNumber = Math.floor(
+          Math.random() *
+            data.results[0].userSearchResponse.userTimelineTweets.length
+        );
+        setUser(data.results[0].userSearchResponse.userScreenName);
+        setContent(
+          data.results[0].userSearchResponse.userTimelineTweets[randomNumber]
+            .text
+        );
+        setDate(
+          data.results[0].userSearchResponse.userTimelineTweets[randomNumber]
+            .created_at
+        );
+        setImage(data.results[0].userSearchResponse.userProfileImageUrl);
+        setRetweets(
+          data.results[0].userSearchResponse.userTimelineTweets[randomNumber]
+            .public_metrics.retweet_count
+        );
+        setLikes(
+          data.results[0].userSearchResponse.userTimelineTweets[randomNumber]
+            .public_metrics.like_count
+        );
+        setComments(
+          data.results[0].userSearchResponse.userTimelineTweets[randomNumber]
+            .public_metrics.reply_count
+        );
       })
     );
   }, []);

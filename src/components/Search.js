@@ -7,7 +7,6 @@ function Search() {
     <div className="search-page">
       <div className="search-container">
         <div className="search-page-overview">
-          <p>Search Page</p>
           <p>
             Enter anything you'd like in the box below and click "submit" to
             begin your search. Tweet Seeker will search through screen names and

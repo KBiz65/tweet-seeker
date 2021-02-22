@@ -1,4 +1,5 @@
 import requests
+import random
 from flask import Flask
 from flask import request, jsonify
 from flask_cors import CORS
@@ -19,18 +20,26 @@ headers = {
 }
 
 
-@app.route("/searchUser", methods=["POST"])
+@app.route("/searchInput", methods=["POST"])
 def search_user():
     searchParam = request.data.decode("UTF-8")
-    searchParamUrl = (
+    searchUserUrl = (
         "https://api.twitter.com/2/users/by?usernames="
         + searchParam
         + "&user.fields=profile_image_url"
     )
-    getUserInfo = requests.get(searchParamUrl, headers=headers).json()
+    searchContentUrl = (
+        "https://api.twitter.com/2/tweets/search/recent?query="
+        + searchParam
+        + "&user.fields=username&tweet.fields=author_id,created_at,public_metrics&expansions=author_id"
+    )
+
+    getUserInfo = requests.get(searchUserUrl, headers=headers).json()
+    getContentInfo = requests.get(searchContentUrl, headers=headers).json()
 
     if "errors" in getUserInfo:
-        return {"results": {"userId": "Does not exist"}}
+        userSearchResults = [{"userId": "Does not exist"}]
+
     else:
         userData = getUserInfo["data"][0]
         userId = userData["id"]
@@ -42,36 +51,83 @@ def search_user():
             + userId
             + "/tweets?tweet.fields=created_at,public_metrics"
         )
-        print("Getting ready to do getUserTweets")
         getUserTweets = requests.get(getUserTweetsUrl, headers=headers).json()
-        responseArray = [
+        userSearchResults = [
             {
-                "userId": userId,
-                "userScreenName": userScreenName,
-                "userName": userName,
-                "userProfileImageUrl": userProfileImage,
-                "userTimelineTweets": getUserTweets["data"],
+                "userSearchResponse": {
+                    "userId": userId,
+                    "userScreenName": userScreenName,
+                    "userName": userName,
+                    "userProfileImageUrl": userProfileImage,
+                    "userTimelineTweets": getUserTweets["data"],
+                }
             }
         ]
-        # print("ResponseArray: ", responseArray)
-        return {"results": responseArray}
+
+    if "errors" in getContentInfo:
+        contentSearchResults = [{"contentId": "Does not exist"}]
+
+    else:
+        if getContentInfo["meta"]["result_count"] == 0:
+            contentSearchResults = [{"contentId": "Does not exist"}]
+
+        else:
+            contentData = getContentInfo["data"]
+            contentIncludes = getContentInfo["includes"]["users"]
+
+            contentSearchResults = [
+                {
+                    "contentSearchResponse": {
+                        "contentData": contentData,
+                        "contentIncludes": contentIncludes,
+                    }
+                }
+            ]
+
+    return {"results": [userSearchResults, contentSearchResults]}
 
 
-@app.route("/searchTweets", methods=["POST"])
-def search_tweets():
-    return "Hello World"
+@app.route("/randomTweet")
+def randomTweet():
+    favoriteTweeters = [
+        "249957750",
+        "357312062",
+        "110770469",
+        "579648949",
+        "2370627199",
+    ]
+    tweeter = favoriteTweeters[random.randint(0, 4)]
 
+    searchTweeterUrl = (
+        "https://api.twitter.com/2/users/" + tweeter + "?user.fields=profile_image_url"
+    )
 
-@app.route("/random")
-def random():
-    return {
-        "result": {
-            "user": "Kevin Bisner",
-            "content": "Tweet text goes here!",
-            "date": "January 17, 2020",
-            "image": "https://kevinbisner.net/static/images/KBiz.jpg",
-            "retweets": 3,
-            "likes": 15,
-            "comments": 2,
-        }
-    }
+    getTweeterInfo = requests.get(searchTweeterUrl, headers=headers).json()
+
+    if "errors" in getTweeterInfo:
+        randomTweet()
+
+    else:
+        userData = getTweeterInfo["data"]
+        userId = userData["id"]
+        userScreenName = userData["username"]
+        userName = userData["name"]
+        userProfileImage = userData["profile_image_url"].replace("_normal", "")
+        getUserTweetsUrl = (
+            "https://api.twitter.com/2/users/"
+            + userId
+            + "/tweets?tweet.fields=created_at,public_metrics"
+        )
+        getUserTweets = requests.get(getUserTweetsUrl, headers=headers).json()
+        userSearchResults = [
+            {
+                "userSearchResponse": {
+                    "userId": userId,
+                    "userScreenName": userScreenName,
+                    "userName": userName,
+                    "userProfileImageUrl": userProfileImage,
+                    "userTimelineTweets": getUserTweets["data"],
+                }
+            }
+        ]
+    return {"results": userSearchResults}

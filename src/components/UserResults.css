@@ -1,0 +1,33 @@
+.screen-name-results {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: #a0d4fc;
+}
+
+.no-user-container {
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  font-size: 2vw;
+  background: #a0d4fc;
+}
+
+.user-profile-image {
+  width: 25%;
+}
+
+.user-profile-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.screen-name {
+  width: 75%;
+  font-size: 2vw;
+}

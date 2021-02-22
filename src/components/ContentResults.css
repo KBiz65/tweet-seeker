@@ -1,0 +1,26 @@
+.content-results {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: #a0d4fc;
+}
+
+.no-content-container {
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  font-size: 2vw;
+}
+
+.content-search-name {
+  width: 75%;
+  font-size: 2vw;
+  margin: 1rem;
+  padding: 0;
+}

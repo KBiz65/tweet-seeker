@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import Random from "./components/Random";
-import logo from "./assets/logo.png";
+import logo from "./assets/TweetSeekerLogo.svg";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
               <Link to="/search.html">Search</Link>
             </li>
             <li className="navbar-item">
-              <Link to="/random">Random</Link>
+              <Link to="/random.html">Random</Link>
             </li>
           </ul>
         </div>
@@ -34,7 +34,7 @@ function App() {
           <Route path="/search.html">
             <Search />
           </Route>
-          <Route path="/random">
+          <Route path="/random.html">
             <Random />
           </Route>
           <Route path="/">

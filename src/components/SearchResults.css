@@ -2,33 +2,3 @@
   width: 100%;
   margin-top: 2rem;
 }
-
-.screen-name-results {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid black;
-}
-
-.no-user-container {
-  width: 100%;
-  margin: 0;
-  padding: 1rem;
-  text-align: center;
-}
-
-.user-profile-image {
-  width: 25%;
-}
-
-.user-profile-image img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.screen-name {
-  width: 75%;
-  font-size: 2vw;
-}

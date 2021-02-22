@@ -1,18 +1,19 @@
 import requests
 import random
+import os
 from flask import Flask
 from flask import request, jsonify
 from flask_cors import CORS
+from decouple import config
 
 app = Flask(__name__)
 CORS(app)
 
-# Twitter config
-consumer_key = "RRANE9krMoDf6YGDDkF8NAeKn"
-consumer_secret = "F5siDuPTIu2QLyTAKgQwBFj1U2ZP5kwEAOSR0dJQFUKOVyrtkB"
-access_token = "177089634-RK23U0fMTTxcDC9BdW8kDqX1XWMH3q3n5fJilgc4"
-access_token_secret = "uYSx0W2FfMk6WelqCVVO0PewdtQCKqi5dqTTVO1U88EAI"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAKYYMgEAAAAAij9Mw5Mz3l4xcn4HJmSyGLqygNs%3DhWPXsGwubcpoDY9JySskul2PXk92tD8ZGkOcslgheIsAXyaSEe"
+# set Twitter config environment variables
+os.environ["BEARER_TOKEN"] = "bearer_token"
+
+# get env variables
+bearer_token = os.getenv("BEARER_TOKEN")
 
 headers = {
     "Authorization": "Bearer %s" % bearer_token,

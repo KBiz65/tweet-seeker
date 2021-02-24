@@ -29,3 +29,5 @@ instance/
 __pycache__/
 flask-api/venv/.env
 .env
+
+env/

@@ -6,7 +6,7 @@ from flask import request, jsonify
 from flask_cors import CORS
 from decouple import config
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./build/", static_url_path="/")
 CORS(app)
 
 # get env variables
@@ -16,6 +16,11 @@ headers = {
     "Authorization": "Bearer %s" % bearer_token,
     "Content-Type": "application/json",
 }
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return app.send_static_file("index.html")
 
 
 @app.route("/searchInput", methods=["POST"])
